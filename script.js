@@ -23,6 +23,7 @@ let ladderActive = false;
 let laddertipping = false;
 let firstStart = true;
 let gameOverBool = false;
+let nextBlock = false;
 
 let currentBlock;
 let currentLadder;
@@ -253,7 +254,6 @@ function tiltLadder(ladder) {
                 if (difficultyMultiplier === 0.5) return;
                 difficultyMultiplier -= 0.1;
             }
-            console.log(score);
             next();
         };
     }, 15 * difficultyMultiplier)
@@ -472,24 +472,25 @@ function drawScore(color) {
 }
 
 function next() {
+    nextBlock = true;
     clearInterval(blinkingRestart)
     moveBlock(blocks);
     setTimeout(() => {
         clearInterval(moving);
         drawLadders(ladders);
         drawBlock();
+        nextBlock = false;
     }, random(1000, 2000));
 }
 
 document.addEventListener('keydown', (e) => {
     if (e.key == ' ') {
         ladderActive = false;
-
         if (gameOverBool) {
             init();
         }
 
-        if (blocks.length == 1) {
+        if (blocks.length == 1 && !nextBlock) {
             next();
         }
     }
