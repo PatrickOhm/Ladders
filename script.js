@@ -144,6 +144,7 @@ function drawBlocks(blocks) {
 }
 
 function drawLadder(x, y) {
+    nextBlock = false;
     let optimalLength;
     let stopGrowing = false;
     if (firstStart) {
@@ -473,13 +474,15 @@ function drawScore(color) {
 
 function next() {
     nextBlock = true;
+    console.log(nextBlock);
     clearInterval(blinkingRestart)
     moveBlock(blocks);
     setTimeout(() => {
         clearInterval(moving);
         drawLadders(ladders);
         drawBlock();
-        nextBlock = false;
+       
+        console.log(nextBlock);
     }, random(1000, 2000));
 }
 
